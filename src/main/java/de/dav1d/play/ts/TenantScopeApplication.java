@@ -3,10 +3,12 @@ package de.dav1d.play.ts;
 import de.dav1d.play.ts.property.PropertyEnvironmentInitializer;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.ComponentScan;
 
 
 @SpringBootApplication
+@EnableConfigurationProperties
 @ComponentScan("de.dav1d.play.ts")
 public class TenantScopeApplication
 {
