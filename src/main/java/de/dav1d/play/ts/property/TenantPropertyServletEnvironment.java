@@ -31,6 +31,13 @@ public class TenantPropertyServletEnvironment extends StandardServletEnvironment
     @Override
     public void initPropertySources(ServletContext servletContext, ServletConfig servletConfig)
     {
+        // This method is called twice, once on prepareRefresh and the second time on refresh
+        // the first time there will be no beans available, not even the bean factory will
+        // be fully initialized.
+        // The second time the application context has knowledge of all available beans,
+        // so the getBeanNamesForType call will return at least one bean name,
+        // even if the bean was not initialized yet, getBean will initialize it if required.
+        // Assuming there is a TenantScope the bean will be already initialized.
         String[] tenantBeans = applicationContext.getBeanNamesForType(TenantGetter.class);
 
         MutablePropertySources propertySources = getPropertySources();

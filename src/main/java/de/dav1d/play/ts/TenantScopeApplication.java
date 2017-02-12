@@ -1,22 +1,21 @@
 package de.dav1d.play.ts;
 
-import de.dav1d.play.ts.property.PropertyEnvironmentInitializer;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.ComponentScan;
 
 
 @SpringBootApplication
 @EnableConfigurationProperties
 @ComponentScan("de.dav1d.play.ts")
-public class TenantScopeApplication
+public class TenantScopeApplication extends SpringBootServletInitializer
 {
     public static void main(String[] args)
     {
         new SpringApplicationBuilder(TenantScopeApplication.class)
-            //.environment(new SimplePropertyServletEnvironment())
-            .initializers(new PropertyEnvironmentInitializer())
+            //.listeners(new PropertyEnvironmentListener())
             .run(args);
         //SpringApplication.run(TenantScopeApplication.class, args);
     }
