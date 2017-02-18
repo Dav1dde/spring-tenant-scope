@@ -1,7 +1,7 @@
 package de.dav1d.play.ts.config;
 
 import de.dav1d.play.ts.tenant.RegexTenantFilter;
-import de.dav1d.play.ts.tenant.TenantSetter;
+import de.dav1d.play.ts.tenant.TenantHolder;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,11 +14,11 @@ import java.util.regex.Pattern;
 public class WebConfig extends WebMvcConfigurerAdapter
 {
     @Bean
-    public FilterRegistrationBean tenantFilter(TenantSetter tenantSetter)
+    public FilterRegistrationBean tenantFilter(TenantHolder tenantHolder)
     {
         FilterRegistrationBean filter = new FilterRegistrationBean(
             new RegexTenantFilter(
-                tenantSetter, Pattern.compile("^/(?<tenant>\\w+)(?<path>/.*)$"), "/%s"
+                tenantHolder, Pattern.compile("^/(?<tenant>\\w+)(?<path>/.*)$"), "/%s"
             )
         );
         filter.addUrlPatterns("/*");

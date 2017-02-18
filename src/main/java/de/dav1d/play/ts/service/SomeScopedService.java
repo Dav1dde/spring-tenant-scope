@@ -1,7 +1,7 @@
 package de.dav1d.play.ts.service;
 
 import de.dav1d.play.ts.scope.TenantScoped;
-import de.dav1d.play.ts.tenant.TenantGetter;
+import de.dav1d.play.ts.tenant.TenantHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -12,19 +12,16 @@ import org.springframework.stereotype.Service;
 public class SomeScopedService
 {
     @Autowired
-    private TenantGetter tenantGetter;
+    private TenantHolder tenantHolder;
 
-    @Value("${tenant.current}")
-    private String tenantValue;
-
-    @Value("${example.value}")
-    private String exampleValue;
+    @Value("${foo.bar}")
+    private String fooBarVale;
 
     public String identity()
     {
         return String.format(
-            "%s -> %s | %s | %s",
-            tenantGetter.getTenant(), Integer.toHexString(this.hashCode()), tenantValue, exampleValue
+            "%s -> %s | %s",
+            tenantHolder.getTenant(), Integer.toHexString(this.hashCode()), fooBarVale
         );
     }
 }

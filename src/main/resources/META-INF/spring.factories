@@ -1,1 +1,1 @@
-org.springframework.context.ApplicationListener=de.dav1d.play.ts.property.PropertyEnvironmentListener
+org.springframework.context.ApplicationListener=de.dav1d.play.ts.property.TenantPropertyEnvironmentListener

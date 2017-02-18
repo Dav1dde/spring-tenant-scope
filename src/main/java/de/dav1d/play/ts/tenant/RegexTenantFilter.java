@@ -16,10 +16,10 @@ public class RegexTenantFilter extends AbstractTenantFilter
     protected final String contextPathFormatString;
 
     public RegexTenantFilter(
-        TenantSetter tenantSetter, Pattern pattern, String contextPathFormatString
+        TenantHolder tenantHolder, Pattern pattern, String contextPathFormatString
     )
     {
-        super(tenantSetter);
+        super(tenantHolder);
 
         this.pattern = pattern;
         this.contextPathFormatString = contextPathFormatString;

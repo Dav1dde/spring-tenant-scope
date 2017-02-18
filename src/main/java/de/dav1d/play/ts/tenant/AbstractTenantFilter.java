@@ -8,17 +8,16 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 
 public abstract class AbstractTenantFilter extends GenericFilterBean
 {
-    protected final TenantSetter tenantSetter;
+    protected final TenantHolder tenantHolder;
 
-    public AbstractTenantFilter(TenantSetter tenantSetter)
+    public AbstractTenantFilter(TenantHolder tenantHolder)
     {
-        this.tenantSetter = tenantSetter;
+        this.tenantHolder = tenantHolder;
     }
 
     protected abstract TenantServletPath getTenantServletPath(ServletRequest request, ServletResponse response)
@@ -34,7 +33,7 @@ public abstract class AbstractTenantFilter extends GenericFilterBean
             return;
         }
 
-        tenantSetter.setTenant(tenantServletPath.getTenant());
+        tenantHolder.setTenant(tenantServletPath.getTenant());
         chain.doFilter(new TenantRequest((HttpServletRequest) request, tenantServletPath), response);
     }
 

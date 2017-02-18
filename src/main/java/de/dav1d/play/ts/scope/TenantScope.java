@@ -1,6 +1,6 @@
 package de.dav1d.play.ts.scope;
 
-import de.dav1d.play.ts.tenant.TenantGetter;
+import de.dav1d.play.ts.tenant.TenantHolder;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.ObjectFactory;
@@ -15,18 +15,18 @@ public class TenantScope implements Scope
     private static final Log logger = LogFactory.getLog(TenantScope.class);
 
 
-    protected final TenantGetter tenantGetter;
+    protected final TenantHolder tenantHolder;
     protected final Map<String, Map<String, Object>> tenantScope = new ConcurrentHashMap<>();
 
-    public TenantScope(TenantGetter tenantGetter)
+    public TenantScope(TenantHolder tenantHolder)
     {
-        this.tenantGetter = tenantGetter;
+        this.tenantHolder = tenantHolder;
     }
 
     @Override
     public Object get(String name, ObjectFactory<?> objectFactory)
     {
-        String tenant = tenantGetter.getTenant();
+        String tenant = tenantHolder.getTenant();
         Map<String, Object> scope =
             tenantScope.computeIfAbsent(tenant, k -> new ConcurrentHashMap<>());
 
@@ -36,7 +36,7 @@ public class TenantScope implements Scope
     @Override
     public Object remove(String name)
     {
-        Map<String, Object> scope = tenantScope.get(tenantGetter.getTenant());
+        Map<String, Object> scope = tenantScope.get(tenantHolder.getTenant());
         return scope == null ? null : scope.remove(name);
     }
 
@@ -56,6 +56,6 @@ public class TenantScope implements Scope
     @Override
     public String getConversationId()
     {
-        return tenantGetter.getTenant();
+        return tenantHolder.getTenant();
     }
 }

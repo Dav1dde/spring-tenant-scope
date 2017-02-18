@@ -1,10 +1,11 @@
 package de.dav1d.play.ts.tenant;
 
-public class ThreadLocalTenant implements TenantSetter, TenantGetter
+
+public class ThreadLocalTenantHolder implements TenantHolder
 {
     private ThreadLocal<String> threadLocal;
 
-    public ThreadLocalTenant(String defaultTenant)
+    public ThreadLocalTenantHolder(String defaultTenant)
     {
         this.threadLocal = ThreadLocal.withInitial(() -> defaultTenant);
     }
