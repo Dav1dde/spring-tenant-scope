@@ -15,13 +15,16 @@ public class SomeScopedService
     private TenantHolder tenantHolder;
 
     @Value("${foo.bar}")
-    private String fooBarVale;
+    private String fooBarValue;
+
+    @Autowired
+    private SomeScopedProperty someScopedProperty;
 
     public String identity()
     {
         return String.format(
-            "%s -> %s | %s",
-            tenantHolder.getTenant(), Integer.toHexString(this.hashCode()), fooBarVale
+            "%s -> %s | %s | %s",
+            tenantHolder.getTenant(), Integer.toHexString(this.hashCode()), fooBarValue, someScopedProperty.getProperty()
         );
     }
 }

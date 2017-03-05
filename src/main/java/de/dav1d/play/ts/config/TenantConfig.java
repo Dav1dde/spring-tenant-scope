@@ -15,13 +15,13 @@ public class TenantConfig
     private ConfigurableBeanFactory configurableBeanFactory;
 
     @Bean
-    public TenantHolder tenantHolder()
+    public static TenantHolder tenantHolder()
     {
         return new ThreadLocalTenantHolder("default");
     }
 
     @Bean
-    public CustomScopeConfigurer tenantScope(TenantHolder tenantHolder)
+    public static CustomScopeConfigurer tenantScope(TenantHolder tenantHolder)
     {
         CustomScopeConfigurer scopeConfigurer = new CustomScopeConfigurer();
         scopeConfigurer.addScope("tenant", new TenantScope(tenantHolder));

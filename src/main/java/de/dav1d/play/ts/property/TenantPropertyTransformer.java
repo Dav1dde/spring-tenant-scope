@@ -18,8 +18,14 @@ public class TenantPropertyTransformer implements PropertyTransformer
         if (tenantHolder != null)
         {
             String tenant = tenantHolder.getTenant();
-            return new String[]{key + "[" + tenant + "]", key};
+            return new String[]{key + "@" + tenant, key};
         }
         return new String[]{key};
+    }
+
+    @Override
+    public boolean isTransformed(String name)
+    {
+        return name != null && name.contains("@");
     }
 }
