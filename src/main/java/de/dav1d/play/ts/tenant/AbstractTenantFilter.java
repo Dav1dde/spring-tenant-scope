@@ -8,6 +8,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 
@@ -33,7 +34,15 @@ public abstract class AbstractTenantFilter extends GenericFilterBean
             return;
         }
 
-        tenantHolder.setTenant(tenantServletPath.getTenant());
+        try
+        {
+            tenantHolder.setTenant(tenantServletPath.getTenant());
+        }
+        catch (InvalidTenantException e)
+        {
+            ((HttpServletResponse) response).sendError(400, e.getMessage());
+            return;
+        }
         chain.doFilter(new TenantRequest((HttpServletRequest) request, tenantServletPath), response);
     }
 

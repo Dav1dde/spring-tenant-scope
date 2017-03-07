@@ -16,7 +16,7 @@ public class TenantScope implements Scope
 
 
     protected final TenantHolder tenantHolder;
-    protected final Map<String, Map<String, Object>> tenantScope = new ConcurrentHashMap<>();
+    protected final Map<Object, Map<String, Object>> tenantScope = new ConcurrentHashMap<>();
 
     public TenantScope(TenantHolder tenantHolder)
     {
@@ -26,7 +26,7 @@ public class TenantScope implements Scope
     @Override
     public Object get(String name, ObjectFactory<?> objectFactory)
     {
-        String tenant = tenantHolder.getTenant();
+        Object tenant = tenantHolder.getTenant();
         Map<String, Object> scope =
             tenantScope.computeIfAbsent(tenant, k -> new ConcurrentHashMap<>());
 
@@ -56,6 +56,6 @@ public class TenantScope implements Scope
     @Override
     public String getConversationId()
     {
-        return tenantHolder.getTenant();
+        return tenantHolder.getTenant().toString();
     }
 }

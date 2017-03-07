@@ -17,7 +17,7 @@ public class TenantPropertyTransformer implements PropertyTransformer
     {
         if (tenantHolder != null)
         {
-            String tenant = tenantHolder.getTenant();
+            String tenant = tenantHolder.getTenant().toString();
             return new String[]{key + "@" + tenant, key};
         }
         return new String[]{key};
