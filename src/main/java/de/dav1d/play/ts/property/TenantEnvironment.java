@@ -1,6 +1,5 @@
-package de.dav1d.play.ts.property2;
+package de.dav1d.play.ts.property;
 
-import de.dav1d.play.ts.property.TenantPropertyTransformer;
 import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.core.env.MutablePropertySources;
 import org.springframework.web.context.support.StandardServletEnvironment;

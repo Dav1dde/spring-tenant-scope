@@ -1,6 +1,5 @@
-package de.dav1d.play.ts.property2;
+package de.dav1d.play.ts.property;
 
-import de.dav1d.play.ts.property.PropertyTransformer;
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
 

@@ -12,8 +12,7 @@ public class TenantPropertyEnvironmentListener implements ApplicationListener<Ap
     public void onApplicationEvent(ApplicationPreparedEvent event)
     {
         ConfigurableEnvironment environment = event.getApplicationContext().getEnvironment();
-        MultiTryPropertyServletEnvironment newEnvironment =
-            new MultiTryPropertyServletEnvironment();
+        TenantEnvironment newEnvironment = new TenantEnvironment();
         newEnvironment.merge(environment);
         event.getApplicationContext().setEnvironment(newEnvironment);
 

@@ -1,8 +1,7 @@
-package de.dav1d.play.ts.property2;
+package de.dav1d.play.ts.property;
 
-import de.dav1d.play.ts.property.NullPropertyTransformer;
-import de.dav1d.play.ts.property.PropertyTransformer;
-import de.dav1d.play.ts.property.TenantPropertyTransformer;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.aop.Advisor;
 import org.springframework.aop.framework.Advised;
 import org.springframework.aop.framework.ProxyFactory;
@@ -23,6 +22,8 @@ import java.util.function.Consumer;
 
 public class WrappingMutablePropertySources extends MutablePropertySources
 {
+    private static final Log logger = LogFactory.getLog(WrappingMutablePropertySources.class);
+
     private final MutablePropertySources realPropertySources;
     private PropertyTransformer propertyTransformer;
 
@@ -102,6 +103,13 @@ public class WrappingMutablePropertySources extends MutablePropertySources
         ReflectionUtils.doWithFields(propertySource.getClass(), f -> {
             ReflectionUtils.makeAccessible(f);
             ReflectionUtils.setField(f, result, ReflectionUtils.getField(f, propertySource));
+            if (!Modifier.isFinal(f.getModifiers()) && logger.isDebugEnabled())
+            {
+                logger.warn(String.format(
+                    "Non final field on property source: %s! "
+                    + "There may be write access to this field (%s) with unexpected behaviour",
+                    propertySource.getName(), f.getName()));
+            }
         }, f -> !Modifier.isStatic(f.getModifiers()));
         return result;
     }
